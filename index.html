@@ -1,209 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Foreseeer - Smart Demand Forecasting for Local Retail</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 0; }
+        .logo { font-size: 28px; font-weight: bold; }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 0; text-align: center; }
+        .hero h1 { font-size: 48px; margin-bottom: 20px; font-weight: 700; }
+        .hero p { font-size: 22px; margin-bottom: 40px; opacity: 0.95; }
+        .cta-button { display: inline-block; background: white; color: #667eea; padding: 15px 40px; text-decoration: none; border-radius: 30px; font-weight: 600; font-size: 18px; transition: 0.2s; }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .features { padding: 80px 0; background: #f8f9fa; }
+        .features h2, .how-it-works h2, .forecast h2 { text-align: center; font-size: 36px; margin-bottom: 60px; color: #2d3748; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 40px; }
+        .feature-card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.07); transition: 0.2s; }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .feature-icon { font-size: 48px; margin-bottom: 20px; }
+        .how-it-works { padding: 80px 0; }
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 30px; }
+        .step { text-align: center; }
+        .step-number { width: 60px; height: 60px; background: linear-gradient(135deg,#667eea,#764ba2); color: white; border-radius: 50%; line-height: 60px; font-size: 24px; font-weight: bold; margin: 0 auto 20px; }
+        footer { background: #2d3748; color: white; text-align: center; padding: 40px 0; }
+        .contact-section { background: linear-gradient(135deg,#667eea,#764ba2); color: white; padding: 60px 0; text-align: center; }
+        .forecast { padding: 80px 0; background: white; }
+        #forecast-output { margin-top: 30px; padding: 20px; background: #f1f1f1; border-radius: 10px; display: none; white-space: pre-line; }
+    
+            to { opacity:1; transform:translateY(0); }
         }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-        }
-        
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        
-        .hero p {
-            font-size: 22px;
-            margin-bottom: 40px;
-            opacity: 0.95;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 15px 40px;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 18px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        
-        .features {
-            padding: 80px 0;
-            background: #f8f9fa;
-        }
-        
-        .features h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 60px;
-            color: #2d3748;
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
-            transition: transform 0.2s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        .feature-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        
-        .feature-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #2d3748;
-        }
-        
-        .feature-card p {
-            color: #4a5568;
-            line-height: 1.7;
-        }
-        
-        .how-it-works {
-            padding: 80px 0;
-        }
-        
-        .how-it-works h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 60px;
-            color: #2d3748;
-        }
-        
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .step {
-            text-align: center;
-        }
-        
-        .step-number {
-            display: inline-block;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            line-height: 60px;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        
-        .step h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #2d3748;
-        }
-        
-        .step p {
-            color: #4a5568;
-        }
-        
-        footer {
-            background: #2d3748;
-            color: white;
-            text-align: center;
-            padding: 40px 0;
-        }
-        
-        .contact-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-        }
-        
-        .contact-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .contact-section p {
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero p {
-                font-size: 18px;
-            }
-            
-            .features h2, .how-it-works h2 {
-                font-size: 28px;
-            }
-        }
-    </style>
+        .reveal { opacity:0; transform:translateY(30px); transition:1s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        </style>
 </head>
 <body>
     <header>
         <div class="container">
             <div class="logo">Foreseeer</div>
+                <nav style="float:right; margin-top:-28px;">
+                    <a href="#about" style="color:white; font-size:18px; text-decoration:none; margin-left:20px; font-weight:500;">About Me</a>
+                </nav>
         </div>
     </header>
 
@@ -211,9 +50,12 @@
         <div class="container">
             <h1>Predict Tomorrow's Demand Today</h1>
             <p>AI-powered forecasting that helps local retailers stock smarter, not harder</p>
-            <a href="#contact" class="cta-button">Get Started</a>
+            <a href="#forecast" class="cta-button">Try Forecasting</a>
         </div>
-    </section>
+            <div style="text-align:center; margin-top:25px;">
+                <a href="/sample_foreseeer_sales.csv" download style="font-size:26px; color:white; text-decoration:underline; cursor:pointer; font-weight:600;">Click here! Download a sample sales file</a>
+            </div>
+        </section>
 
     <section class="features">
         <div class="container">
@@ -222,49 +64,63 @@
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
                     <h3>Upload & Predict</h3>
-                    <p>Simply upload your historical sales data and get accurate demand forecasts in minutes. No technical expertise required.</p>
+                    <p>Upload historical sales data and get accurate demand forecasts in minutes.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎯</div>
                     <h3>Smart Algorithms</h3>
-                    <p>Our advanced forecasting algorithms learn from your unique sales patterns to deliver predictions tailored to your business.</p>
+                    <p>We learn from your patterns and tailor predictions to your store.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">💰</div>
                     <h3>Reduce Waste</h3>
-                    <p>Stop overstocking and understocking. Optimize inventory levels to reduce waste and maximize profits.</p>
+                    <p>Optimize inventory levels and avoid overstocking or shortages.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="how-it-works">
+    <section class="forecast" id="forecast" style="background:#f8f9fa;">
         <div class="container">
-            <h2>How It Works</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Upload Your Data</h3>
-                    <p>Upload your historical sales data in CSV or Excel format</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>We Analyze</h3>
-                    <p>Our algorithm identifies patterns and trends in your sales history</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Get Forecasts</h3>
-                    <p>Receive accurate demand predictions to guide your purchasing decisions</p>
-                </div>
+            <h2 style="color:#2d3748;">Upload Your Data to Get a Forecast</h2>
+            <p style="text-align:center; margin-bottom:20px; font-size:18px; color:#4a5568;">Upload a CSV file with two columns: <strong>date</strong> and <strong>sales</strong>.</p>
+
+            <div style="text-align:center; margin-bottom:25px;">
+                <input type="file" id="file-input" accept=".csv" style="padding:12px; border-radius:8px; border:1px solid #ccd; font-size:16px;" />
             </div>
+
+            <div style="text-align:center; margin-bottom:25px; color:#4a5568; font-size:18px;">
+                <label for="horizon">Time horizon (days): </label>
+                <input type="number" id="horizon" min="1" value="7" style="padding:8px; border-radius:6px; border:1px solid #ccd; font-size:16px;" />
+            </div>
+
+            <div style="text-align:center;">
+                <button class="cta-button" onclick="runForecast()" style="cursor:pointer;">Generate Forecast</button>
+            </div>
+
+            <pre id="forecast-output" style="margin-top:30px; padding:20px; background:white; border-radius:10px; border:1px solid #ddd; font-size:16px; display:none; color:#333;"></pre>
         </div>
     </section>
 
-    <section class="contact-section" id="contact">
+    <section style="padding:40px 0; background:white;">
+        <div class="container" style="max-width:900px;">
+            <p style="font-size:18px; color:#4a5568; line-height:1.7; text-align:center;">
+                The forecast you see above is generated using a simple moving average model. It looks at your most recent
+                sales history and calculates the average of the last few days to predict what future demand may look like.
+                This approach works well for steady retail patterns and gives you a quick snapshot of what to expect.
+            </p>
+            <p style="font-size:18px; color:#4a5568; line-height:1.7; margin-top:20px; text-align:center;">
+                To get the best results, upload a clean CSV file with two columns labeled <strong>date</strong> and
+                <strong>sales</strong>. Each row should represent one day of sales for a single product or category.
+                The more consistent and complete your data is, the more accurate your forecast will be.
+            </p>
+        </div>
+    </section>
+
+    <section class="contact-section" style="margin-top:60px;" id="contact">
         <div class="container">
             <h2>Ready to Forecast Smarter?</h2>
-            <p>Join local retailers who are already optimizing their inventory</p>
+            <p>Join local retailers optimizing their stores with AI</p>
             <a href="mailto:hello@foreseeer.com" class="cta-button">Contact Us</a>
         </div>
     </section>
@@ -274,5 +130,94 @@
             <p>&copy; 2025 Foreseeer. All rights reserved.</p>
         </div>
     </footer>
+
+    <section id="about" style="padding:100px 0; background:linear-gradient(135deg,#667eea,#764ba2);  color:white;">
+        <div class="container" style="max-width:900px; text-align:center;">
+            <div style="width:100%; height:auto; margin-bottom:40px; ">
+                <img src="/mnt/data/54925806-4200-42FD-A39C-BDB58F5D81D3.jpeg" alt="Shorya Jain" style="width:100%; max-height:360px; object-fit:cover; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+            </div>
+            <h2 style="font-size:42px; margin-bottom:20px;">About Me</h2>
+            <p style="font-size:20px; line-height:1.8; max-width:750px; margin:0 auto 40px;">
+                Hi, I'm <strong>Shorya Jain</strong>. I’ve always been interested in how businesses make decisions, especially around supply, demand, and pricing. Studying economics showed me how many small businesses operate without the tools they need to understand their own data. A lot of them aren’t maximizing their profits simply because they don’t have access to clear insights.
+                <br><br>
+                That’s why I built Foreseeer. I wanted to take what I’ve learned about economics, forecasting, and coding and turn it into something real that helps local shops run smarter and waste less.
+            </p>
+            <div  style="display:flex; justify-content:center; gap:40px; margin-top:20px; flex-wrap:wrap;">
+                <div style="width:260px; background:white; padding:20px; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,0.15); color:#333;">
+                    <div style="font-size:40px; margin-bottom:10px;">💻</div>
+                    <h3 style="margin-bottom:10px;">My Coding Journey</h3>
+                    <p style="font-size:16px; line-height:1.6;">I’ve worked with Python, JavaScript, HTML, CSS, and machine learning. I love creating tools that help real users.</p>
+                </div>
+                <div style="width:260px; background:white; padding:20px; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,0.15); color:#333;">
+                    <div style="font-size:40px; margin-bottom:10px;">🎯</div>
+                    <h3 style="margin-bottom:10px;">My Mission</h3>
+                    <p style="font-size:16px; line-height:1.6;">I want to make AI simple and accessible for everyday businesses so they can thrive without complexity.</p>
+                </div>
+                <div style="width:260px; background:white; padding:20px; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,0.15); color:#333;">
+                    <div style="font-size:40px; margin-bottom:10px;">🌄</div>
+                    <h3 style="margin-bottom:10px;">Outside of Coding</h3>
+                    <p style="font-size:16px; line-height:1.6;">I enjoy learning new skills, exploring ideas, and experimenting with design and technology together.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        
+            to { opacity:1; transform:translateY(0); }
+        }
+    </style>
+
+<script>
+// Simple moving average based forecasting
+function runForecast() {
+    const fileInput = document.getElementById('file-input');
+    const horizon = parseInt(document.getElementById('horizon').value);
+    const output = document.getElementById('forecast-output');
+
+    if (!fileInput.files.length) {
+        alert('Please upload a CSV file first.');
+        return;
+    }
+
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const text = e.target.result;
+        const rows = text.split('\n').map(r => r.trim()).filter(r => r);
+
+        let sales = [];
+        for (let i = 1; i < rows.length; i++) {
+            const parts = rows[i].split(',');
+            if (parts.length >= 2) {
+                sales.push(parseFloat(parts[1]));
+            }
+        }
+
+        if (sales.length < 3) {
+            alert('Not enough data to forecast. Please upload more historical data.');
+            return;
+        }
+
+        // Moving average window
+        const window = 3;
+        const forecasts = [];
+
+        let lastValues = sales.slice(-window);
+        for (let i = 0; i < horizon; i++) {
+            const next = lastValues.reduce((a,b)=>a+b,0) / lastValues.length;
+            forecasts.push(next.toFixed(2));
+            lastValues = [...lastValues.slice(1), next];
+        }
+
+        output.style.display = 'block';
+        output.textContent = `Forecast for next ${horizon} days:\n` + forecasts.map((v,i)=>`Day ${i+1}: ${v}`).join('\n');
+    };
+
+    reader.readAsText(file);
+}
+</script>
+
 </body>
 </html>
